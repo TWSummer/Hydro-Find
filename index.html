@@ -18,15 +18,6 @@
       Number.prototype.toDeg = function() {
          return this / Math.PI * 180;
       }
-      window.addEventListener("deviceorientation", handleOrientation, true);
-      function handleOrientation(event) {
-        var absolute = event.absolute;
-        var alpha    = event.alpha;
-        var beta     = event.beta;
-        var gamma    = event.gamma;
-        let x = document.getElementById('x');
-        x.innerHTML = alpha;
-      }
 
       require([
           "esri/WebMap",
@@ -184,12 +175,20 @@
         compassBtn.classList.remove('focus');
         mapBtn.classList += ' focus';
       });
+      window.addEventListener("deviceorientation", handleOrientation, true);
+      const compassDiv = document.getElementById('compassDiv');
+      function handleOrientation(event) {
+        var absolute = event.absolute;
+        var alpha    = event.alpha;
+        var beta     = event.beta;
+        var gamma    = event.gamma;
+        compassDiv.style.transform = `rotate(${alpha})`;
+      }
     })
 
     </script>
   </head>
   <body>
-    <p id="x"> NO ALPHA RIGHT NOW </p>
     <nav id="nav">
       <div id="compassBtn" class="btn"> COMPASS </div>
       <div id='drop'></div>

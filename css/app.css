@@ -20,8 +20,8 @@ html, body, #viewDiv {
   height: 100%;
   font-family: 'Bungee Outline', cursive;
   font-weight: 700;
-  font-size: 30px;
-  padding: 5px;
+  font-size: 60px;
+  padding: 10px;
   background-color: #DEE4EF;
 }
 
@@ -35,8 +35,8 @@ html, body, #viewDiv {
 
 #drop {
   position: absolute;
-  height: 35px;
-  width: 35px;
+  height: 65px;
+  width: 65px;
   background-image: url("https://image.flaticon.com/icons/svg/234/234794.svg");
 }
 
