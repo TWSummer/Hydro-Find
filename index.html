@@ -27,8 +27,9 @@
           "esri/views/MapView",
           "esri/geometry/Point",
           "esri/layers/FeatureLayer",
+          "esri/tasks/support/Query",
           "dojo/domReady!"
-        ], function(WebMap, MapView, Point, FeatureLayer) {
+        ], function(WebMap, MapView, Point, FeatureLayer, Query) {
 
         var webmap = new WebMap({
           portalItem: {
@@ -58,12 +59,23 @@
         }
 
         function showPosition(position) {
+            console.log("Showing Position");
             var pt = new Point({
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
             });
             view.center = pt;
             view.rotation = 0;
+            performQuery();
+        }
+
+        function performQuery() {
+          var query = new Query();
+          query.geometry = mapPoint; // mapPoint obtained from view-click event.
+          query.distance = 1000;
+          query.units = "miles";
+          query.spatialRelationship = "intersects"; // All features that intersect 100mi buffer
+          fl.queryFeatures(query).then(e => console.log(e.features));
         }
 
         getLocation();
