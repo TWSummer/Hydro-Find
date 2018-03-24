@@ -14,6 +14,9 @@
       Number.prototype.toRad = function() {
          return this * Math.PI / 180;
       }
+      Number.prototype.toDeg = function() {
+         return this / Math.PI * 180;
+      }
       window.addEventListener("deviceorientation", handleOrientation, true);
       function handleOrientation(event) {
         var absolute = event.absolute;
@@ -85,7 +88,7 @@
           let featureCallback = (e) => {
             queryResults = e.features;
             console.log(queryResults);
-            if (queryResults.length < 20) {
+            if (queryResults.length < 40) {
               query.distance = query.distance * 2;
               fl.queryFeatures(query).then(
                 featureCallback
@@ -100,11 +103,40 @@
         }
 
         function assessNearestWater(sources) {
+          directions = [];
           sources.forEach(source => {
             let sourcePos = source.geometry.centroid;
-            console.log(calculateDistance(lat, lng, sourcePos.latitude, sourcePos.longitude));
+            otherLat = sourcePos.latitude;
+            otherLng = sourcePos.longitude;
+            let dist = calculateDistance(lat, lng, otherLat, otherLng);
+            let dir = calculateDirection(lat, lng, otherLat, otherLng);
+            if (!directions[dir] || dist < directions[dir].distance) {
+              directions[dir] = {
+                distance: dist
+              }
+            }
           });
+          console.log(directions);
+        }
 
+        function calculateDirection(myLat, myLng, otherLat, otherLng) {
+          var dLat = (otherLat-myLat).toRad();
+          var dLon = (otherLng-myLng).toRad();
+
+          myLat = myLat.toRad();
+          otherLat = otherLat.toRad();
+
+          var y = Math.sin(dLon) * Math.cos(otherLat);
+          var x = Math.cos(myLat)*Math.sin(otherLat) -
+                  Math.sin(myLat)*Math.cos(otherLat)*Math.cos(dLon);
+          var brng = (Math.atan2(y, x)).toDeg();
+
+          // fix negative degrees
+          if(brng<0) {
+              brng=360-Math.abs(brng);
+          }
+
+          return Math.floor((brng+22.5)/45);
         }
 
         function calculateDistance(myLat, myLng, otherLat, otherLng) {
