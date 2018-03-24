@@ -44,13 +44,13 @@
             id: "b71dc98673d44d94b265494a8a43b8ac"
           }
         });
-        // const hydrants = new FeatureLayer({
-        //     portalItem: {  // autocasts as esri/portal/PortalItem
-        //     id: "7188fb276cfbed8537c2b1795eaa461d"
-        //   }
-        // });
-        // console.log("Hydrants");
-        // console.log(hydrants);
+        const hydrants = new FeatureLayer({
+            portalItem: {  // autocasts as esri/portal/PortalItem
+            id: "7188fb276cfbed8537c2b1795eaa461d"
+          }
+        });
+        console.log("Hydrants");
+        console.log(hydrants);
 
         function getLocation() {
           // if (navigator.geolocation) {
@@ -72,7 +72,7 @@
             view.center = pt;
             view.rotation = 0;
             performQuery(pt, fl);
-            // performQuery(pt, hydrants);
+            performQuery(pt, hydrants);
         }
 
         function performQuery(pt, sourceType) {
