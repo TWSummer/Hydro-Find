@@ -23,8 +23,9 @@
           "esri/WebMap",
           "esri/views/MapView",
           "esri/geometry/Point",
+          "esri/layers/FeatureLayer",
           "dojo/domReady!"
-        ], function(WebMap, MapView, Point) {
+        ], function(WebMap, MapView, Point, FeatureLayer) {
 
         var webmap = new WebMap({
           portalItem: {
@@ -36,6 +37,14 @@
           container: "viewDiv",
           map: webmap
         });
+
+        const fl = new FeatureLayer({
+            portalItem: {  // autocasts as esri/portal/PortalItem
+            id: "b71dc98673d44d94b265494a8a43b8ac"
+          }
+        });
+
+        fl.queryFeatures().then(e => console.log(e.features));
 
         function getLocation() {
           if (navigator.geolocation) {
