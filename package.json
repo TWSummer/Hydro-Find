@@ -1,0 +1,21 @@
+{
+  "name": "FirstNetH2OLocator",
+  "version": "1.0.0",
+  "description": "A tool to help first responders locate adequate water sources in an emergency",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "engines": {
+    "node": "v6.11.5"
+  },
+  "scripts": {
+    "build": "webpack --watch"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "webpack": "^3.11.0"
+  }
+}
