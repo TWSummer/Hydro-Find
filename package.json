@@ -2,7 +2,6 @@
   "name": "FirstNetH2OLocator",
   "version": "1.0.0",
   "description": "A tool to help first responders locate adequate water sources in an emergency",
-  "main": "app.js",
   "directories": {
     "lib": "lib"
   },
