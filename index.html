@@ -59,19 +59,18 @@
         }
 
         function showPosition(position) {
-            console.log("Showing Position");
             var pt = new Point({
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
             });
             view.center = pt;
             view.rotation = 0;
-            performQuery();
+            performQuery(pt);
         }
 
         function performQuery() {
           var query = new Query();
-          query.geometry = mapPoint; // mapPoint obtained from view-click event.
+          query.geometry = pt; // mapPoint obtained from view-click event.
           query.distance = 1000;
           query.units = "miles";
           query.spatialRelationship = "intersects"; // All features that intersect 100mi buffer
