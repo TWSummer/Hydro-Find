@@ -171,19 +171,22 @@
         mapBtn.classList += ' focus';
       });
       window.addEventListener("deviceorientation", handleOrientation, true);
-      const compassDiv = document.getElementById('compassDiv');
       function handleOrientation(event) {
         var absolute = event.absolute;
         var alpha    = event.alpha;
         var beta     = event.beta;
         var gamma    = event.gamma;
+        const compassDiv = document.getElementById('compassDiv');
         compassDiv.style.transform = `rotate(${alpha})`;
+        let x = document.getElementById('x');
+        x.innerHTML = alpha;
       }
     })
 
     </script>
   </head>
   <body>
+    <div id="x"></div>
     <nav id="nav">
       <div id="compassBtn" class="btn"> COMPASS </div>
       <div id='drop'></div>

@@ -48,6 +48,7 @@ html, body, #viewDiv {
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: none;
 }
 
 #comp {
