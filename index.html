@@ -9,7 +9,14 @@
     <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
     <script src="https://js.arcgis.com/4.6/"></script>
     <script>
-
+      window.addEventListener("deviceorientation", handleOrientation, true);
+      function handleOrientation(event) {
+        var absolute = event.absolute;
+        var alpha    = event.alpha;
+        var beta     = event.beta;
+        var gamma    = event.gamma;
+        console.log(event);
+      }
       require([
           "esri/WebMap",
           "esri/views/MapView",
@@ -42,9 +49,11 @@
               longitude: position.coords.longitude
             });
             view.center = pt;
+            view.rotation = 0;
         }
 
         getLocation();
+        view.rotation = 180;
 
         }
     );
