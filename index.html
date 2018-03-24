@@ -15,7 +15,8 @@
         var alpha    = event.alpha;
         var beta     = event.beta;
         var gamma    = event.gamma;
-        console.log(event);
+        let x = document.getElementById('x');
+        x.innerHTML = alpha;
       }
 
       require([
@@ -60,6 +61,7 @@
     </script>
   </head>
   <body>
+    <p id="x"> NO ALPHA RIGHT NOW </p>
     <div id="viewDiv"></div>
   </body>
 </html>
