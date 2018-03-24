@@ -11,20 +11,24 @@
     <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
     <script src="https://js.arcgis.com/4.6/"></script>
     <script>
+
       window.addEventListener("deviceorientation", handleOrientation, true);
       function handleOrientation(event) {
         var absolute = event.absolute;
         var alpha    = event.alpha;
         var beta     = event.beta;
         var gamma    = event.gamma;
-        console.log(event);
+        let x = document.getElementById('x');
+        x.innerHTML = alpha;
       }
+
       require([
           "esri/WebMap",
           "esri/views/MapView",
           "esri/geometry/Point",
+          "esri/layers/FeatureLayer",
           "dojo/domReady!"
-        ], function(WebMap, MapView, Point) {
+        ], function(WebMap, MapView, Point, FeatureLayer) {
 
         var webmap = new WebMap({
           portalItem: {
@@ -36,6 +40,14 @@
           container: "viewDiv",
           map: webmap
         });
+
+        const fl = new FeatureLayer({
+            portalItem: {  // autocasts as esri/portal/PortalItem
+            id: "b71dc98673d44d94b265494a8a43b8ac"
+          }
+        });
+
+        fl.queryFeatures().then(e => console.log(e.features));
 
         function getLocation() {
           if (navigator.geolocation) {
@@ -55,13 +67,13 @@
         }
 
         getLocation();
-        view.rotation = 180;
 
         }
     );
     </script>
   </head>
   <body>
+    <p id="x"> NO ALPHA RIGHT NOW </p>
     <div id="viewDiv"></div>
   </body>
 </html>
