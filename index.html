@@ -6,6 +6,7 @@
   <head>
     <meta charset="utf-8">
     <title>FirstNet</title>
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Outline" rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css" type="text/css">
     <link rel="stylesheet" href="css/app.css" type="text/css">
     <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
@@ -74,17 +75,54 @@
           query.distance = 1000;
           query.units = "miles";
           query.spatialRelationship = "intersects"; // All features that intersect 100mi buffer
-          fl.queryFeatures(query).then(e => console.log(e.features));
         }
 
         getLocation();
 
         }
     );
+
+    document.addEventListener('DOMContentLoaded', () => {
+      var showCompass = true;
+      let compassBtn = document.getElementById('compassBtn');
+      let mapBtn = document.getElementById('mapBtn');
+      let compass = document.getElementById('compassDiv');
+      let map = document.getElementById('viewDiv');
+      compassBtn.addEventListener('click', e => {
+        compass.classList.remove('hide');
+        map.classList += ' hide';
+        mapBtn.classList.remove('focus');
+        compassBtn.classList += ' focus';
+      });
+      mapBtn.addEventListener('click', e => {
+        console.log('click');
+        map.classList.remove('hide');
+        compass.classList += ' hide';
+        compassBtn.classList.remove('focus');
+        mapBtn.classList += ' focus';
+      });
+    })
+
     </script>
   </head>
   <body>
     <p id="x"> NO ALPHA RIGHT NOW </p>
+    <nav id="nav">
+      <div id="compassBtn" class="btn"> COMPASS </div>
+      <div id='drop'></div>
+      <div id="mapBtn" class="btn"> MAP </div>
+    </nav>
     <div id="viewDiv"></div>
+    <div id="compassDiv">
+      <div id='comp'>
+        <div class="uparrow arrow"></div>
+        <div class='midarrows'>
+          <div class="leftarrow arrow"></div>
+          <div class="arrowmid"></div>
+          <div class="rightarrow arrow"></div>
+        </div>
+        <div class="downarrow arrow"></div>
+      </div>
+    </div>
   </body>
 </html>

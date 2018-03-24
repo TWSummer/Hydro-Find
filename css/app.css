@@ -2,3 +2,88 @@ html, body, #viewDiv {
   height: 100%;
   width: 100%;
 }
+
+#nav {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: 'Bungee Outline', cursive;
+  font-weight: 700;
+  font-size: 30px;
+  padding: 5px;
+  background-color: #DEE4EF;
+}
+
+#nav:hover {
+  cursor: pointer;
+}
+
+.hide {
+  display: none !important;
+}
+
+#drop {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  background-image: url("https://image.flaticon.com/icons/svg/234/234794.svg");
+}
+
+.focus {
+  background-color: #6EC5E9;
+}
+
+#compassDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#comp {
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.midarrows {
+  display: flex;
+  flex-direction: row;
+}
+
+.uparrow {
+  transform: rotate(270deg)
+}
+
+.leftarrow {
+  transform: rotate(180deg)
+}
+
+.arrow {
+  width: 120px;
+  height: 120px;
+  background-size: cover;
+  background-image: url("https://cdn3.iconfinder.com/data/icons/simple-arrows-essentials/48/v-02-512.png");
+}
+
+.downarrow {
+  transform: rotate(90deg)
+}
+
+.arrowmid {
+  width: 80px;
+  height: 1px;
+}
