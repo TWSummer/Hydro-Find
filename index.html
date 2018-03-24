@@ -48,7 +48,7 @@
           }
         });
 
-        fl.queryFeatures().then(e => console.log(e.features));
+        // fl.queryFeatures().then(e => console.log(e.features));
 
         function getLocation() {
           if (navigator.geolocation) {
@@ -68,7 +68,7 @@
             performQuery(pt);
         }
 
-        function performQuery() {
+        function performQuery(pt) {
           var query = new Query();
           query.geometry = pt; // mapPoint obtained from view-click event.
           query.distance = 1000;
