@@ -12,7 +12,12 @@
     <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
     <script src="https://js.arcgis.com/4.6/"></script>
     <script>
-
+      Number.prototype.toRad = function() {
+         return this * Math.PI / 180;
+      }
+      Number.prototype.toDeg = function() {
+         return this / Math.PI * 180;
+      }
       window.addEventListener("deviceorientation", handleOrientation, true);
       function handleOrientation(event) {
         var absolute = event.absolute;
@@ -49,32 +54,105 @@
           }
         });
 
-        fl.queryFeatures().then(e => console.log(e.features));
+        // fl.queryFeatures().then(e => console.log(e.features));
 
         function getLocation() {
-          if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(showPosition);
-          } else {
-              console.log("Geolocation is not supported by this browser.");
-          }
+          // if (navigator.geolocation) {
+          //     navigator.geolocation.getCurrentPosition(showPosition);
+          // } else {
+          //     console.log("Geolocation is not supported by this browser.");
+          // }
+          showPosition();
         }
+
+        let lat = 34.294878;
+        let lng = -118.553540;
 
         function showPosition(position) {
             var pt = new Point({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
+              latitude: lat, //position.coords.latitude,
+              longitude: lng //position.coords.longitude
             });
             view.center = pt;
             view.rotation = 0;
             performQuery(pt);
         }
 
-        function performQuery() {
-          var query = new Query();
+        function performQuery(pt) {
+          console.log("Performing query");
+          var query = fl.createQuery();
           query.geometry = pt; // mapPoint obtained from view-click event.
-          query.distance = 1000;
+          query.distance = 0.25;
           query.units = "miles";
           query.spatialRelationship = "intersects"; // All features that intersect 100mi buffer
+          let queryResults;
+          let featureCallback = (e) => {
+            queryResults = e.features;
+            console.log(queryResults);
+            if (queryResults.length < 40) {
+              query.distance = query.distance * 2;
+              fl.queryFeatures(query).then(
+                featureCallback
+              );
+            } else {
+              assessNearestWater(queryResults);
+            }
+          }
+          fl.queryFeatures(query).then(
+            featureCallback
+          );
+        }
+
+        function assessNearestWater(sources) {
+          directions = [];
+          sources.forEach(source => {
+            let sourcePos = source.geometry.centroid;
+            otherLat = sourcePos.latitude;
+            otherLng = sourcePos.longitude;
+            let dist = calculateDistance(lat, lng, otherLat, otherLng);
+            let dir = calculateDirection(lat, lng, otherLat, otherLng);
+            if (!directions[dir] || dist < directions[dir].distance) {
+              directions[dir] = {
+                distance: dist
+              }
+            }
+          });
+          console.log(directions);
+        }
+
+        function calculateDirection(myLat, myLng, otherLat, otherLng) {
+          var dLat = (otherLat-myLat).toRad();
+          var dLon = (otherLng-myLng).toRad();
+
+          myLat = myLat.toRad();
+          otherLat = otherLat.toRad();
+
+          var y = Math.sin(dLon) * Math.cos(otherLat);
+          var x = Math.cos(myLat)*Math.sin(otherLat) -
+                  Math.sin(myLat)*Math.cos(otherLat)*Math.cos(dLon);
+          var brng = (Math.atan2(y, x)).toDeg();
+
+          // fix negative degrees
+          if(brng<0) {
+              brng=360-Math.abs(brng);
+          }
+
+          return Math.floor((brng+22.5)/45);
+        }
+
+        function calculateDistance(myLat, myLng, otherLat, otherLng) {
+          console.log("Calculating Distance");
+          var R = 3959;
+          var x1 = myLat-otherLat;
+          var dLat = x1.toRad();
+          var x2 = myLng-otherLng;
+          var dLon = x2.toRad();
+          var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                          Math.cos(myLat.toRad()) * Math.cos(otherLat.toRad()) *
+                          Math.sin(dLon/2) * Math.sin(dLon/2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          var d = R * c;
+          return d;
         }
 
         getLocation();
