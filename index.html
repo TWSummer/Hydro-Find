@@ -19,6 +19,12 @@
          return this / Math.PI * 180;
       }
 
+      function precisionRound(number, precision) {
+        var factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+      }
+
+
       require([
           "esri/WebMap",
           "esri/views/MapView",
@@ -45,9 +51,7 @@
           }
         });
         const hydrants = new FeatureLayer({
-            portalItem: {  // autocasts as esri/portal/PortalItem
-            id: "7188fb276cfbed8537c2b1795eaa461d"
-          }
+          url: "https://maps.lacity.org/lahub/rest/services/Fire_Department/MapServer/0"
         });
         console.log("Hydrants");
         console.log(hydrants);
@@ -110,7 +114,7 @@
             let dir = calculateDirection(lat, lng, otherLat, otherLng);
             if (!directions[dir] || dist < directions[dir].distance) {
               directions[dir] = {
-                distance: dist
+                distance: precisionRound(dist, 2)
               }
             }
           });
@@ -134,7 +138,7 @@
               brng=360-Math.abs(brng);
           }
 
-          return Math.floor((brng+22.5)/45);
+          return Math.floor((brng+45)/90) % 4;
         }
 
         function calculateDistance(myLat, myLng, otherLat, otherLng) {
