@@ -114,6 +114,18 @@
             }
           });
           console.log(directions);
+          updateDistances(directions)
+        }
+
+        function updateDistances(directions) {
+          let upval = document.getElementById('upval');
+          let downval = document.getElementById('downval');
+          let leftval = document.getElementById('leftval');
+          let rightval = document.getElementById('rightval');
+          upval.innerHTML += `<span>${Math.round(directions[0].distance, 4)} mi </span>`;
+          downval.innerHTML += `<span>${directions[1].distance} mi </span>`;
+          leftval.innerHTML += `<span>${directions[2].distance} mi </span>`;
+          rightval.innerHTML += `<span>${directions[3].distance} mi </span>`;
         }
 
         function calculateDirection(myLat, myLng, otherLat, otherLng) {
@@ -133,7 +145,7 @@
               brng=360-Math.abs(brng);
           }
 
-          return Math.floor((brng+22.5)/45);
+          return Math.floor((brng+45)/90);
         }
 
         function calculateDistance(myLat, myLng, otherLat, otherLng) {
@@ -183,15 +195,15 @@
         var gamma    = event.gamma;
         const compassDiv = document.getElementById('compassDiv');
         compassDiv.style.transform = `rotate(${alpha}deg)`;
-        let x = document.getElementById('x');
-        x.innerHTML = alpha;
+        // let log = document.getElementById('log');
+        // log.innerHTML = alpha;
       }
     })
 
     </script>
   </head>
   <body>
-    <div id="x"></div>
+    <div id="log"></div>
     <nav id="nav">
       <div id="compassBtn" class="btn"> COMPASS </div>
       <div id='drop'></div>
@@ -200,13 +212,29 @@
     <div id="viewDiv"></div>
     <div id="compassDiv">
       <div id='comp'>
+        <div id="upval" class="icons">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9T6mbAXNmU7zX1VwNzxa4cObAn7mw5yHMliHGeowZHc9PEcdcnQ"/>
+                    <img src="https://cdn3.iconfinder.com/data/icons/funky/136/Fire-Hydrant-512.png"/>
+        </div>
         <div class="uparrow arrow"></div>
         <div class='midarrows'>
+          <div id="leftval" class="icons">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9T6mbAXNmU7zX1VwNzxa4cObAn7mw5yHMliHGeowZHc9PEcdcnQ"/>
+                                          <img src="https://cdn3.iconfinder.com/data/icons/funky/136/Fire-Hydrant-512.png"/>
+          </div>
           <div class="leftarrow arrow"></div>
           <div class="arrowmid"></div>
           <div class="rightarrow arrow"></div>
+          <div id="rightval" class="icons">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9T6mbAXNmU7zX1VwNzxa4cObAn7mw5yHMliHGeowZHc9PEcdcnQ"/>
+                      <img src="https://cdn3.iconfinder.com/data/icons/funky/136/Fire-Hydrant-512.png"/>
+          </div>
         </div>
         <div class="downarrow arrow"></div>
+        <div id="downval" class="icons">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9T6mbAXNmU7zX1VwNzxa4cObAn7mw5yHMliHGeowZHc9PEcdcnQ"/>
+                                          <img src="https://cdn3.iconfinder.com/data/icons/funky/136/Fire-Hydrant-512.png"/>
+        </div>
       </div>
     </div>
   </body>

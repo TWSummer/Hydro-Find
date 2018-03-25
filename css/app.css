@@ -85,6 +85,11 @@ html, body, #viewDiv {
 }
 
 .arrowmid {
-  width: 80px;
+  width: 120px;
   height: 1px;
+}
+
+.icons img{
+  width: 100px;
+  height: 100px;
 }
