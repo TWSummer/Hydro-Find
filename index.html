@@ -127,9 +127,9 @@
           let leftval = document.getElementById('leftval');
           let rightval = document.getElementById('rightval');
           upval.innerHTML += `<span>${directions[0].distance} mi </span>`;
-          downval.innerHTML += `<span>${directions[1].distance} mi </span>`;
-          leftval.innerHTML += `<span>${directions[2].distance} mi </span>`;
-          rightval.innerHTML += `<span>${directions[3].distance} mi </span>`;
+          downval.innerHTML += `<span>${directions[2].distance} mi </span>`;
+          leftval.innerHTML += `<span>${directions[3].distance} mi </span>`;
+          rightval.innerHTML += `<span>${directions[1].distance} mi </span>`;
         }
 
         function calculateDirection(myLat, myLng, otherLat, otherLng) {
@@ -198,7 +198,7 @@
         var beta     = event.beta;
         var gamma    = event.gamma;
         const compassDiv = document.getElementById('compassDiv');
-        compassDiv.style.transform = `rotate(${alpha}deg)`;
+        compassDiv.style.transform = `rotate(${alpha - 180}deg)`;
         // let log = document.getElementById('log');
         // log.innerHTML = alpha;
       }
